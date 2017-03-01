@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+const Slack = require('node-slack');
+
+// check all required parameters are set. if not all are set, only a console message will be
+// emitted. nothing will be sent to slack
+const params_set = ['PELIAS_SLACK_WEBHOOK', 'PELIAS_SLACK_CHANNEL', 'PELIAS_SLACK_USERNAME', 'PELIAS_ENV'].every(function(env_var) {
+  return process.env[env_var];
+});
+
+// set variables based on environment variables or defaults
+// the defaults are meant to clearly show that the variable is empty
+const channel = process.env.PELIAS_SLACK_CHANNEL || '$PELIAS_SLACK_CHANNEL';
+const username = process.env.PELIAS_SLACK_USERNAME || '$PELIAS_SLACK_USERNAME';
+const pelias_env = process.env.PELIAS_ENV || '$PELIAS_ENV';
+
+// set slack message based on environment name and message passed as first parameter
+const message = `${pelias_env}: ${process.argv[2]}`;
+
+// write slack notification to the console for logging and debugging purposes
+console.log(`SLACK NOTIFICATION: ${message}`);
+
+// exit without throwing an error if required params are not set
+if (!params_set) {
+  process.exit(0);
+}
+
+// if params ARE set, send a slack notification
+const slack = new Slack(process.env.PELIAS_SLACK_WEBHOOK);
+
+slack.send({
+  text: message,
+  channel: channel,
+  username: username
+});
