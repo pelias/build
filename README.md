@@ -5,4 +5,6 @@
 
 # Pelias Build Tools
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/pelias/build.svg)](https://greenkeeper.io/)
+
 This is the set of tools used to initiate and manage builds for the Pelias project.
