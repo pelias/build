@@ -17,7 +17,6 @@ sleep 5
 rm $PELIAS_BUILD_TRACKING_FILE
 
 # report on success
-end_time=$SECONDS
-elapsed_time=$(( $end_time - $start_time ))
+elapsed_time=$(( $SECONDS - $start_time ))
 friendly_elapsed_time=`echo $((elapsed_time/86400))" days "$(date -d "1970-01-01 + $elapsed_time seconds" "+%H hours %M minutes %S seconds")` # calculate elapsed time from http://unix.stackexchange.com/questions/27013/displaying-seconds-as-days-hours-mins-seconds
 notify_slack "a build has finished! time taken: $friendly_elapsed_time"
