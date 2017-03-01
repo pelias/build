@@ -5,7 +5,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
 PATH="${PATH}:$DIR/../bin" # make it easier to run scripts
 
 # use a file to mark that a build has started
-touch /tmp/.pelias-build-started
+touch $PELIAS_BUILD_TRACKING_FILE
 
 start_time=$SECONDS
 notify_slack "a pelias build is starting"
@@ -14,7 +14,7 @@ notify_slack "a pelias build is starting"
 sleep 5
 
 # remove tracking file, signifying a successfully completed build
-rm /tmp/.pelias-build-started
+rm $PELIAS_BUILD_TRACKING_FILE
 
 # report on success
 end_time=$SECONDS
