@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/pelias/build/issues"
   },
-  "homepage": "https://github.com/pelias/build#readme"
+  "homepage": "https://github.com/pelias/build#readme",
+  "dependencies": {
+    "node-slack": "0.0.7"
+  }
 }
