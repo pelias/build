@@ -32,7 +32,7 @@ if pgrep 'build_pelias.sh' > /dev/null ; then #check if a process with the name 
 	echo "a build is currently running. another will not be started"
 else
 	echo "build not currently running, but tmp file present, so it probably crashed"
-	if [[ -v ABORT_IF_LAST_BUILD_FAILED ]]; then
+	if [[ ! -v ABORT_IF_LAST_BUILD_FAILED ]]; then
 		echo "not starting a new build"
 	else
 		echo "starting a new build anyway"
