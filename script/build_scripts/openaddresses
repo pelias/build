@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail # http://redsymbol.net/articles/unofficial-bash-strict-mode/
+
+notify_slack "building OA"
+sleep 3
+notify_slack "done building OA"

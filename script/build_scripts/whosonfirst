@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euo pipefail # http://redsymbol.net/articles/unofficial-bash-strict-mode/
+
+notify_slack "done building WOF"
