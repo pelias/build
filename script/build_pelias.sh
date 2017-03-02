@@ -10,7 +10,10 @@ handle_exit () {
 	elapsed_time=$(( $SECONDS - $start_time ))
 	friendly_elapsed_time=`echo $((elapsed_time/86400))" days "$(date -d "1970-01-01 + $elapsed_time seconds" "+%H hours %M minutes %S seconds")` # calculate elapsed time from http://unix.stackexchange.com/questions/27013/displaying-seconds-as-days-hours-mins-seconds
 
-	if [[ "$exit_code" -ne "0" ]]; then # check if exit-code is non-zero (which means the script failed)
+	if [[ -v BUILD_WAS_KILLED ]]; then
+		notify_slack "a build was killed! time taken: $friendly_elapsed_time"
+		rm $PELIAS_BUILD_TRACKING_FILE # remove tracking file, since a killed build implies we want to restart it
+	elif [[ "$exit_code" -ne "0" ]]; then # check if exit-code is non-zero (which means the script failed)
 		notify_slack "a build has failed! time taken: $friendly_elapsed_time"
 		exit $exit_code # exit with that same error code
 	else
@@ -19,6 +22,11 @@ handle_exit () {
 	fi
 }
 
+handle_sigterm () {
+	BUILD_WAS_KILLED=true
+}
+
+trap handle_sigterm SIGTERM
 trap handle_exit EXIT
 
 # use a file to mark that a build has started
